@@ -5,5 +5,8 @@ import numpy as np
 from google.colab.patches import cv2_imshow
 görsel = cv2.imread('/content/drive/My Drive/Colab Notebooks/manzara.png')
 cv2_imshow(görsel)
-görsel = cv2.imread('/content/drive/My Drive/Colab Notebooks/manzara.png')
-cv2_imshow(görsel)
+# Görüntüye OpenCV skaler bölme uygulama
+pikselbölme = cv2.divide(görsel, 2)
+# Çıktı görüntüsünü görüntüleme
+cv2_imshow(pikselbölme)
+
