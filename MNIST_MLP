@@ -1,0 +1,29 @@
+#Aşağıda #Google #Colab'ta el yazısı rakamları tanımak için bir modelin nasıl yapılandırılıp ve eğitileceği ayrıca modelin test verileri üzerindeki doğruluğunu değerlendirmek için oluşturulan kodlar bulunmaktadır.
+
+import tensorflow as tf
+from tensorflow import keras
+
+mnist = keras.datasets.mnist
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data()
+
+train_images = train_images / 255.0
+test_images = test_images / 255.0
+
+train_labels = keras.utils.to_categorical(train_labels, 10)
+test_labels = keras.utils.to_categorical(test_labels, 10)
+
+model = keras.Sequential([
+  keras.layers.Flatten(input_shape=(28, 28)), # Görüntüleri düzleştirme
+  keras.layers.Dense(128, activation='relu'), # Gizli katman 1
+  keras.layers.Dense(64, activation='relu'),  # Gizli katman 2
+  keras.layers.Dense(10, activation='softmax') # Çıkış katmanı
+])
+
+model.compile(optimizer='adam',
+       loss='categorical_crossentropy',
+       metrics=['accuracy'])
+
+model.fit(train_images, train_labels, epochs=5, batch_size=32, validation_split=0.2)
+
+test_loss, test_acc = model.evaluate(test_images, test_labels)
+print(f"Test accuracy: {test_acc}")
